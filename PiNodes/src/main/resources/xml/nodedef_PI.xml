@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<nodedefs>
+<nodedef name="DigitalOutput" class="vdab.extnodes.raspberrypi.DigitalOutput">
+    <attr name="ConsumedEventTypes">Boolean,Number,String,Event</attr>
+    <attr name="PublishedEventTypes">NONE</attr>
+   	<datadef name="OutputPins">
+	    <attr name="RefreshOnChange" type="Boolean">true</attr>
+		<attr name="Category">Required</attr>
+	</datadef>
+	<datadef name="OutputType">
+		<attr name="Category">Required</attr>
+		<attr name="Enum">GpioOutputTypes</attr>
+	</datadef>
+	<datadef name="PinPrefix">
+		<attr name="Category">Standard</attr>
+	</datadef>
+</nodedef>
+<nodedef name="DigitalInput" class="vdab.extnodes.raspberrypi.DigitalInput">
+    <attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">Event,Boolean</attr>
+    <datadef name="InputPins">
+	    <attr name="RefreshOnChange" type="Boolean">true</attr>
+		<attr name="Category">Required</attr>
+	</datadef>
+	<datadef name="EventGrouping">
+		<attr name="Enum">EventGroupType</attr>
+		<attr name="Category">Required</attr>
+	</datadef>
+	<datadef name="GroupName">
+		<attr name="Category">Standard</attr>
+	</datadef>
+	<datadef name="PinPrefix">
+		<attr name="Category">Standard</attr>
+	</datadef>
+</nodedef>
+<nodedef name="AnalogInputGert" class="vdab.extnodes.raspberrypi.AnalogInputGert">
+ 	<attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">Number</attr>
+</nodedef>
+<nodedef name="BlinkSource" class="vdab.extnodes.raspberrypi.BlinkSource">
+    <attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">Event</attr>
+</nodedef>
+<nodedef name="AnalogInput" class="vdab.extnodes.raspberrypi.AnalogInput">
+ 	<attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">Number,Event,String</attr>
+</nodedef>
+<nodedef name="PiCameraSource" class="vdab.extnodes.raspberrypi.PiCameraSource">
+ 	<attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">File</attr>
+</nodedef>
+<nodedef name="PiCameraService" class="vdab.extnodes.raspberrypi.PiCameraService">
+ 	<attr name="ConsumedEventTypes">Event,Trigger</attr>
+    <attr name="PublishedEventTypes">File</attr>
+    <datadef name="Command">
+		<attr name="Category">System</attr>
+	</datadef>
+    <datadef name="Filename">
+		<attr name="Category">Required</attr>
+	</datadef>
+	 <datadef name="ImageSize">
+		<attr name="Category">Required</attr>
+		<attr name="Enum">ImageSize</attr>
+	</datadef>
+		 <datadef name="ImageQuality">
+		<attr name="Category">Required</attr>
+		<attr name="Enum">ImageQuality</attr>
+	</datadef>
+	<datadef name="ISO">
+		<attr name="Category">Required</attr>
+		<attr name="Enum">CameraISO</attr>
+	</datadef>
+	<datadef name="Brightness">
+		<attr name="Category">Required</attr>
+		<attr name="MaxChars" type="Integer">4</attr>
+	</datadef>
+	<datadef name="Contrast">
+		<attr name="Category">Required</attr>
+		<attr name="MaxChars" type="Integer">4</attr>
+	</datadef>
+</nodedef>
+<nodedef name="PiVideoSource" class="vdab.extnodes.raspberrypi.PiVideoSource">
+ 	<attr name="ConsumedEventTypes">NONE</attr>
+    <attr name="PublishedEventTypes">File</attr>
+</nodedef>
+<nodedef name="PiVideoService" class="vdab.extnodes.raspberrypi.PiVideoService">
+ 	<attr name="ConsumedEventTypes">Event,Trigger</attr>
+    <attr name="PublishedEventTypes">File</attr>
+    <datadef name="Command">
+		<attr name="Category">System</attr>
+	</datadef>
+    <datadef name="Filename">
+		<attr name="Category">Required</attr>
+	</datadef>
+	<datadef name="ISO">
+		<attr name="Category">Required</attr>
+		<attr name="Enum">CameraISO</attr>
+	</datadef>
+	<datadef name="Brightness">
+		<attr name="Category">Required</attr>
+		<attr name="MaxChars" type="Integer">3</attr>
+	</datadef>
+	<datadef name="Contrast">
+		<attr name="Category">Required</attr>
+		<attr name="MaxChars" type="Integer">3</attr>
+	</datadef>
+</nodedef>
+</nodedefs>
