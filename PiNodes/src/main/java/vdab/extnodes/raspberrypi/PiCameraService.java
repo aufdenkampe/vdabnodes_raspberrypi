@@ -32,6 +32,8 @@ public class PiCameraService extends CommandService  {
 	private Integer c_ISO = Integer.valueOf(200);
 	private Integer c_Contrast = Integer.valueOf(0);
 	private Integer c_Brightness = Integer.valueOf(50);
+	private String c_OtherOptions;
+
 	private AFFile c_OutFile ;
 	private Integer c_FileNo = Integer.valueOf(0);
 	public Integer get_IconCode(){
@@ -72,6 +74,12 @@ public class PiCameraService extends CommandService  {
 	}
 	public Integer get_ImageQuality(){
 		return c_ImageQuality;
+	}
+	public void set_OtherOptions(String options){
+		c_OtherOptions = options;	
+	}
+	public String get_OtherOptions(){
+		return c_OtherOptions;	
 	}
 	public void serviceFailed(AnalysisEvent ae, int code) {
 		publish(new AnalysisTrigger(this, TriggerCode.FAILED, code));
@@ -130,6 +138,9 @@ public class PiCameraService extends CommandService  {
 			sb.append(" -br ").append(c_Brightness);
 			sb.append(" -co ").append(c_Contrast);			
 		
+			if (c_OtherOptions != null)
+				sb.append(" ").append(c_OtherOptions);
+				
 			sb.append(" -o ");
 			String filename = FileUtility.buildFilenameFromTemplate(c_Filename, c_FileNo);
 			c_FileNo++;
