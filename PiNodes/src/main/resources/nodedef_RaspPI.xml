@@ -57,35 +57,42 @@
 	</datadef>
     <datadef name="Filename">
 		<attr name="Category">Required</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Desc" >The image filename which can inculde ${DataTime} to add a timestamp.</attr>			
 	</datadef>
 	 <datadef name="ImageSize">
 		<attr name="Category">Required</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">ImageSize</attr>
 		<attr name="Desc" >Image sizes.</attr>			
 	</datadef>
 		 <datadef name="ImageQuality">
-		<attr name="Category">Required</attr>
+		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">ImageQuality</attr>
 		<attr name="Desc" >Image quality.</attr>				
 	</datadef>
 	<datadef name="ISO">
-		<attr name="Category">Required</attr>
+		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">CameraISO</attr>
 		<attr name="Desc" >The simulated ISO speed.</attr>	
 	</datadef>
 	<datadef name="Brightness">
-		<attr name="Category">Required</attr>
+		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="MaxChars" type="Integer">4</attr>
 		<attr name="Desc" >The image brightness 0 lowest, 100 highest.</attr>	
 	</datadef>
 	<datadef name="Contrast">
-		<attr name="Category">Required</attr>
+		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="MaxChars" type="Integer">4</attr>
 		<attr name="Desc" >The image contrast -100 lowest, 100 highest.</attr>		
 	</datadef>
 	<datadef name="OtherOptions">
 		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Desc" >Any additional camera options. See raspistill documentation.</attr>		
 	</datadef>
 </nodedef>
