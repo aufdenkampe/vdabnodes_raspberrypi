@@ -29,9 +29,9 @@ public class PiCameraService extends CommandService  {
 	private ServiceHandler_Command c_EventHandler;
 	private Integer c_ImageSize ;
 	private Integer c_ImageQuality ;
-	private Integer c_ISO = Integer.valueOf(200);
-	private Integer c_Contrast = Integer.valueOf(0);
-	private Integer c_Brightness = Integer.valueOf(50);
+	private Integer c_ISO ;
+	private Integer c_Contrast ;
+	private Integer c_Brightness;
 	private String c_OtherOptions;
 
 	private AFFile c_OutFile ;
@@ -120,7 +120,8 @@ public class PiCameraService extends CommandService  {
 			default:
 				break;
 			}
-
+			
+			if (c_ImageQuality != null) {
 			switch (c_ImageQuality.intValue()){
 			case ImageQuality.LOW:
 				sb.append(" -q 30");
@@ -133,11 +134,14 @@ public class PiCameraService extends CommandService  {
 				sb.append(" -q 95");
 				break;	
 			}
-			
-			sb.append(" -ISO ").append(c_ISO);
-			sb.append(" -br ").append(c_Brightness);
-			sb.append(" -co ").append(c_Contrast);			
-		
+			}
+			if (c_ISO != null)
+				sb.append(" -ISO ").append(c_ISO);
+			if (c_Brightness != null)
+				sb.append(" -br ").append(c_Brightness);
+			if (c_Contrast != null)
+				sb.append(" -co ").append(c_Contrast);			
+
 			if (c_OtherOptions != null)
 				sb.append(" ").append(c_OtherOptions);
 				
