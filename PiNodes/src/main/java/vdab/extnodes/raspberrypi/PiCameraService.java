@@ -171,7 +171,7 @@ public class PiCameraService extends CommandService  {
 				break;
 			}
 			
-			sb.append(" -md").append(c_SensorMode.intValue());
+			sb.append(" -md ").append(c_SensorMode.intValue());
 
 			// Add Camera Mode
 			if (c_ExposureMode.intValue() != ExposureMode.MANUAL)
