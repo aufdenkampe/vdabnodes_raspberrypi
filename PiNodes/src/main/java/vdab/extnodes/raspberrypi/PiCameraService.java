@@ -206,6 +206,9 @@ public class PiCameraService extends CommandService  {
 			if (c_OtherOptions != null)
 				sb.append(" ").append(c_OtherOptions);
 			
+			// Add the file type.
+			sb.append(" -e ").append(ImageFileType.getEnum().getLabel(c_ImageFileType.intValue()));
+			
 			// Add the file name
 			sb.append(" -o ");
 			String filename = FileUtility.buildFilenameFromTemplate(c_Filename, c_FileNo);
