@@ -55,45 +55,74 @@
     <datadef name="Command">
 		<attr name="Category">System</attr>
 	</datadef>
-    <datadef name="Filename">
+	<datadef name="ImageSize">
 		<attr name="Category">Required</attr>
-		<attr name="EditWhileRunning" type="Boolean">true</attr>
-		<attr name="Desc" >The image filename which can inculde ${DataTime} to add a timestamp.</attr>			
-	</datadef>
-	 <datadef name="ImageSize">
-		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">11</attr>
 		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">ImageSize</attr>
 		<attr name="Desc" >Image sizes.</attr>			
 	</datadef>
-		 <datadef name="ImageQuality">
+    <datadef name="Filename">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">12</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="Desc" >The image filename which can inculde ${DataTime} to add a timestamp.</attr>			
+	</datadef>
+	<datadef name="ImageFileType">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">13</attr>
+		<attr name="Enum">ImageFileType</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="Desc" >The image file type. Select jpg, png, bmp or gif </attr>			
+	</datadef>
+	<datadef name="ExposureMode">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">14</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="RefreshOnChange" type="Boolean">true</attr>
+		<attr name="Enum">ExposureMode</attr>
+		<attr name="Desc" >Select the exposure mode. Use the manual exposure to set advanced paramaters.</attr>			
+	</datadef>
+		<datadef name="SensorMode">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">15</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="Enum">SensorMode</attr>
+		<attr name="Desc" >Select standard image or zoomed image.</attr>			
+	</datadef>
+	<datadef name="OtherOptions">
 		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">16</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="Desc" >Any additional camera options. See raspistill documentation.</attr>		
+	</datadef>
+	<datadef name="ImageQuality">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">21</attr>
 		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">ImageQuality</attr>
 		<attr name="Desc" >Image quality.</attr>				
 	</datadef>
 	<datadef name="ISO">
 		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">22</attr>
 		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">CameraISO</attr>
 		<attr name="Desc" >The simulated ISO speed.</attr>	
 	</datadef>
 	<datadef name="Brightness">
 		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">23</attr>
 		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="MaxChars" type="Integer">4</attr>
 		<attr name="Desc" >The image brightness 0 lowest, 100 highest.</attr>	
 	</datadef>
 	<datadef name="Contrast">
 		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">24</attr>
 		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="MaxChars" type="Integer">4</attr>
 		<attr name="Desc" >The image contrast -100 lowest, 100 highest.</attr>		
-	</datadef>
-	<datadef name="OtherOptions">
-		<attr name="Category">Standard</attr>
-		<attr name="EditWhileRunning" type="Boolean">true</attr>
-		<attr name="Desc" >Any additional camera options. See raspistill documentation.</attr>		
 	</datadef>
 </nodedef>
 <nodedef name="PiVideoSource" class="vdab.extnodes.raspberrypi.PiVideoSource">

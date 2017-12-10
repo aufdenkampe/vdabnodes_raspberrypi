@@ -14,7 +14,7 @@ public class ImageSize {
 	.addEntry(SMALL, "Small 432x324")
 	.addEntry(MEDIUM, "Medium 864x648")
 	.addEntry(LARGE, "Large 1296x972")
-	.addEntry(XLARGE,"XLarge 2592x1944");
+	.addEntry(XLARGE,"Maximum");
 	public static AFEnum getEnum(){
 		return  s_ImageSizeEnum  ;
 	}
