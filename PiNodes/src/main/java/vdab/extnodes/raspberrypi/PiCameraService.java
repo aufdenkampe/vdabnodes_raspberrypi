@@ -6,6 +6,7 @@ import vdab.extnodes.raspberrypi.constants.ImageFileType;
 import vdab.extnodes.raspberrypi.constants.ImageQuality;
 import vdab.extnodes.raspberrypi.constants.ImageSize;
 import vdab.extnodes.raspberrypi.constants.SensorMode;
+import vdab.extnodes.raspberrypi.constants.ShutterSpeed;
 
 import com.lcrc.af.AnalysisData;
 import com.lcrc.af.AnalysisDataDef;
@@ -28,6 +29,7 @@ public class PiCameraService extends CommandService  {
 		ExposureMode.getEnum();
 		SensorMode.getEnum();
 		ImageFileType.getEnum();
+		ShutterSpeed.getEnum();
 	}
 	private static final String EVENTNAME_IMAGEFILECREATED = "ImageFileCreated";
 
@@ -46,7 +48,7 @@ public class PiCameraService extends CommandService  {
 	private Integer c_ISO ;
 	private Integer c_Contrast ;
 	private Integer c_Brightness;
-
+	private Integer c_ShutterSpeed;
 
 	private AFFile c_OutFile ;
 	private Integer c_FileNo = Integer.valueOf(0);
@@ -82,6 +84,15 @@ public class PiCameraService extends CommandService  {
 	}
 	public Integer get_ExposureMode(){
 		return c_ExposureMode;
+	}
+	public void set_ShutterSpeed(Integer speed){
+		c_ShutterSpeed = speed;
+	}
+	public Integer get_ShutterSpeed(){
+		return c_ShutterSpeed;
+	}
+	public AnalysisDataDef def_ShutterSpeed(AnalysisDataDef theDataDef){
+		return sharedAdvancedOptionDef(theDataDef);
 	}
 	public void set_OtherOptions(String options){
 		c_OtherOptions = options;	
@@ -199,9 +210,13 @@ public class PiCameraService extends CommandService  {
 				if (c_Brightness != null)
 					sb.append(" -br ").append(c_Brightness);
 				if (c_Contrast != null)
-					sb.append(" -co ").append(c_Contrast);			
+					sb.append(" -co ").append(c_Contrast);	
+				if (c_ShutterSpeed != null)
+					sb.append(" -ss ").append(c_ShutterSpeed);
+				
+				
 			}
-
+			
 			// Add other options.
 			if (c_OtherOptions != null)
 				sb.append(" ").append(c_OtherOptions);

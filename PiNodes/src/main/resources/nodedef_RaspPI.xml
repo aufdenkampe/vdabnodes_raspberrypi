@@ -110,6 +110,13 @@
 		<attr name="Enum">CameraISO</attr>
 		<attr name="Desc" >The simulated ISO speed.</attr>	
 	</datadef>
+	<datadef name="ShutterSpeed">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">25</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
+		<attr name="Enum">ShutterSpeed</attr>
+		<attr name="Desc" >Shutter Speed in micro seconds.</attr>	
+	</datadef>
 	<datadef name="Brightness">
 		<attr name="Category">Standard</attr>
 		<attr name="EditOrder" type="Integer">23</attr>
