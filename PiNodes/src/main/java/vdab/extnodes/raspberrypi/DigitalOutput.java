@@ -111,6 +111,7 @@ public class DigitalOutput extends AnalysisTarget {
 		
 		logInfo("Preparing to shutdown the GPIO");
 		c_Gpio.shutdown();
+		super._stop();
 	}
 	private GpioPinDigitalOutput[] getOutputPins(String label){
 		

@@ -133,6 +133,7 @@ public class DigitalInput extends AnalysisInput {
 	public void _stop(){
 		logInfo("Preparing to shutdown the GPIO");
 		c_Gpio.shutdown();
+		super._stop();
 	}
 	private  String getPinLabel (int no){
 		return c_PinPrefix+no;
