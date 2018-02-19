@@ -78,20 +78,26 @@ public class DigitalOutput extends AnalysisTarget {
 		theDataDef.setAllPickValues(l.toArray(new String[l.size()]));
 		return theDataDef;
 	}
+	public void _init(){
+		super._init();
+		try {
+			c_Gpio  = GpioFactory.getInstance();
+		}
+		catch (Exception e) {
+			setError("Unable to initialize Gpio Factory e>"+e);
+		}	
+	}
 	public void _start(){
 		super._start();
 		_enable();
 		c_OutputPin_map.clear();
 		try {
-			c_Gpio  = GpioFactory.getInstance();
 			c_Pins = GPIOUtility.createPinArray(c_cdb_OutputPins.getAllSet());
 			if (c_Pins.length <= 0){
 				setError("No digital output selected set at least one output pin");
 				_disable();
 				return;
 			}
-
-		
 			for (int n=0; n < c_Pins.length; n++) {
 				int no = c_Pins[n].getAddress();
 				GpioPinDigitalOutput doPin = c_Gpio.provisionDigitalOutputPin(c_Pins[n], c_Pins[n].getName(), PinState.LOW);
@@ -99,18 +105,28 @@ public class DigitalOutput extends AnalysisTarget {
 			}
 		}
 		catch (Exception e) {
-			setError("Unable to initialize Gpio Factory e>"+e);
+			setError("Unable to provision GPIO pins e>"+e);
 			_disable();
 		}		
 	}
 	public void _stop(){
-		Collection <GpioPinDigitalOutput> doPinC = c_OutputPin_map.values();
-		
-		for (GpioPinDigitalOutput doPin: doPinC)
-			doPin.setShutdownOptions(true, PinState.LOW);
-		
-		logInfo("Preparing to shutdown the GPIO");
-		c_Gpio.shutdown();
+		resetGPIO();
+		super._stop();
+	}
+	private void resetGPIO(){
+		logInfo("Reseting the GPIO"); 
+		try {
+			Collection <GpioPinDigitalOutput> doPinC = c_OutputPin_map.values();	
+			for (GpioPinDigitalOutput doPin: doPinC)
+				doPin.setShutdownOptions(true, PinState.LOW);
+			c_Gpio.shutdown();	
+			for (GpioPinDigitalOutput doPin: doPinC)
+				c_Gpio.unprovisionPin(doPin);
+			c_OutputPin_map.clear();
+		}
+		catch (Exception e){
+			setError("Unable to reset the GPIO e>"+e); 
+		}
 	}
 	private GpioPinDigitalOutput[] getOutputPins(String label){
 		
