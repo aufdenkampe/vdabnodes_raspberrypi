@@ -18,7 +18,6 @@ import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinPullResistance;
-import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
@@ -86,11 +85,10 @@ public class DigitalInput extends AnalysisInput {
 	public void set_GroupName(String name){
 		c_GroupName = name;
 	}
-	public void _start(){
-		super._start();
-		_enable();
+	public void _init(){
+		super._init();
 		try {
-			c_Gpio  = GpioFactory.getInstance();	
+			c_Gpio  = GpioFactory.getInstance();
 			// Create a pin listener
 			c_PinListener = (new GpioPinListenerDigital() {
 	            @Override
@@ -110,6 +108,16 @@ public class DigitalInput extends AnalysisInput {
 	            	}
 	            }
 	        });
+		}
+		catch (Exception e) {
+			setError("Unable to initialize Gpio Factory or Pin Listener e>"+e);
+		}	
+	}
+	public void _start(){
+		super._start();
+		_enable();
+		try {
+
 			c_Pins = GPIOUtility.createPinArray(c_cdb_InputPins.getAllSet());
 			if (c_Pins.length <= 0){
 				setError("No digital inputs selected set at least one input pin");
@@ -121,8 +129,9 @@ public class DigitalInput extends AnalysisInput {
 				c_InputPins[n] = c_Gpio.provisionDigitalInputPin(c_Pins[n], PinPullResistance.PULL_DOWN);
 				c_InputPins[n].addListener(c_PinListener);
 				c_InputPins[n].setShutdownOptions(true);
+				logInfo("Added Pin Listeneer PIN="+c_InputPins[n].getPin().getAddress());
 			}
-			logInfo("DIGITAL INPUT 2");
+
 		}
 		catch (Exception e) {
 			setError("Unable to initialize Digital inputs e>"+e);
@@ -131,9 +140,22 @@ public class DigitalInput extends AnalysisInput {
 		}	
 	}
 	public void _stop(){
-		logInfo("Preparing to shutdown the GPIO");
-		c_Gpio.shutdown();
+		resetGPIO();
 		super._stop();
+	}
+	private void resetGPIO(){
+		logInfo("Reseting the GPIO"); 
+		try {
+			c_Gpio.shutdown();
+			for (GpioPinDigitalInput diPin: c_InputPins)
+				c_Gpio.unprovisionPin(diPin);
+			c_LastVal_map.clear();
+			c_InputPins = null;
+			c_Pins = null;		
+		}
+		catch (Exception e){
+			setError("Unable to reset the GPIO e>"+e); 
+		}
 	}
 	private  String getPinLabel (int no){
 		return c_PinPrefix+no;
