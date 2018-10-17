@@ -1,3 +1,18 @@
+/*LICENSE*
+ * Copyright (C) 2013 - 2018 MJA Technology LLC 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 package vdab.extnodes.raspberrypi;
 
 import java.util.ArrayList;
@@ -78,8 +93,7 @@ public class DigitalOutput extends AnalysisTarget {
 		theDataDef.setAllPickValues(l.toArray(new String[l.size()]));
 		return theDataDef;
 	}
-	public void _init(){
-		super._init();
+	private void initGPIO(){
 		try {
 			c_Gpio  = GpioFactory.getInstance();
 		}
@@ -91,6 +105,9 @@ public class DigitalOutput extends AnalysisTarget {
 		super._start();
 		_enable();
 		c_OutputPin_map.clear();
+		if (c_Gpio == null)
+			initGPIO();
+		
 		try {
 			c_Pins = GPIOUtility.createPinArray(c_cdb_OutputPins.getAllSet());
 			if (c_Pins.length <= 0){
@@ -123,6 +140,7 @@ public class DigitalOutput extends AnalysisTarget {
 			for (GpioPinDigitalOutput doPin: doPinC)
 				c_Gpio.unprovisionPin(doPin);
 			c_OutputPin_map.clear();
+
 		}
 		catch (Exception e){
 			setError("Unable to reset the GPIO e>"+e); 

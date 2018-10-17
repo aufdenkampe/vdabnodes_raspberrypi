@@ -1,3 +1,18 @@
+/*LICENSE*
+ * Copyright (C) 2013 - 2018 MJA Technology LLC 
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+*/
 package vdab.extnodes.raspberrypi;
 
 import java.util.ArrayList;
@@ -18,6 +33,7 @@ import com.pi4j.io.gpio.GpioPin;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
 import com.pi4j.io.gpio.Pin;
 import com.pi4j.io.gpio.PinPullResistance;
+import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 
@@ -85,10 +101,9 @@ public class DigitalInput extends AnalysisInput {
 	public void set_GroupName(String name){
 		c_GroupName = name;
 	}
-	public void _init(){
-		super._init();
+	private void initGPIO(){
 		try {
-			c_Gpio  = GpioFactory.getInstance();
+			
 			// Create a pin listener
 			c_PinListener = (new GpioPinListenerDigital() {
 	            @Override
@@ -108,6 +123,9 @@ public class DigitalInput extends AnalysisInput {
 	            	}
 	            }
 	        });
+			
+			c_Gpio  = GpioFactory.getInstance();
+		
 		}
 		catch (Exception e) {
 			setError("Unable to initialize Gpio Factory or Pin Listener e>"+e);
@@ -116,6 +134,10 @@ public class DigitalInput extends AnalysisInput {
 	public void _start(){
 		super._start();
 		_enable();
+		// Initial GPIO first time.
+		if (c_Gpio == null)
+			initGPIO();
+		
 		try {
 
 			c_Pins = GPIOUtility.createPinArray(c_cdb_InputPins.getAllSet());
@@ -128,7 +150,6 @@ public class DigitalInput extends AnalysisInput {
 			for (int n = 0; n < c_InputPins.length;  n++){
 				c_InputPins[n] = c_Gpio.provisionDigitalInputPin(c_Pins[n], PinPullResistance.PULL_DOWN);
 				c_InputPins[n].addListener(c_PinListener);
-				c_InputPins[n].setShutdownOptions(true);
 				logInfo("Added Pin Listeneer PIN="+c_InputPins[n].getPin().getAddress());
 			}
 
@@ -146,6 +167,8 @@ public class DigitalInput extends AnalysisInput {
 	private void resetGPIO(){
 		logInfo("Reseting the GPIO"); 
 		try {
+			for (GpioPinDigitalInput diPin: c_InputPins)
+				diPin.setShutdownOptions(true, PinState.LOW);
 			c_Gpio.shutdown();
 			for (GpioPinDigitalInput diPin: c_InputPins)
 				c_Gpio.unprovisionPin(diPin);
