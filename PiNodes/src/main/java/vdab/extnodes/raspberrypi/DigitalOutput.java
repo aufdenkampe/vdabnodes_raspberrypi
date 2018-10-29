@@ -79,6 +79,12 @@ public class DigitalOutput extends AnalysisTarget {
 		else {
 			c_cdb_OutputPins.set(ports);
 		}
+		// if it is all, reset all the others.
+		String allLabel = GPIOPins.getEnum().getLabel(GPIOPins.ALL);
+		if (c_cdb_OutputPins.isSet(allLabel)){
+			c_cdb_OutputPins.clear();
+			c_cdb_OutputPins.set(allLabel);			
+		}
 	}
 	public AnalysisDataDef def_OutputPins(AnalysisDataDef theDataDef){
 		String[] portLabels = GPIOPins.getEnum().getAllLabels();

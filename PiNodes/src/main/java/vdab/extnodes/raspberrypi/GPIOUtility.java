@@ -23,9 +23,21 @@ import com.pi4j.io.gpio.RaspiPin;
 public class GPIOUtility {
 	public static Pin[] createPinArray(String[] pinLabels){
 		ArrayList<Pin> l = new ArrayList<Pin>();
+		
+	
+		
 		 for (String pinLabel: pinLabels){
 			int code = GPIOPins.getEnum().getCode(pinLabel);
 			switch (code) {
+			// Special case to add them all and get out.
+			case GPIOPins.ALL:
+				l.clear();
+				for (Pin nextPin :RaspiPin.allPins()){
+					if (GPIOPins.getEnum().getLabel(nextPin.getAddress()) != null)
+						l.add(nextPin);
+				}
+				return l.toArray(new Pin[l.size()]);
+									
 			case GPIOPins.GPIO0:
 				l.add(RaspiPin.GPIO_00);
 				break;
@@ -50,8 +62,37 @@ public class GPIOUtility {
 			case GPIOPins.GPIO7:
 				l.add( RaspiPin.GPIO_07);
 				break;
+
+			case GPIOPins.GPIO21:
+				l.add(RaspiPin.GPIO_21);
+				break;
+			case GPIOPins.GPIO22:
+				l.add(RaspiPin.GPIO_22);
+				break;
+			case GPIOPins.GPIO23:
+				l.add(RaspiPin.GPIO_23);
+				break;
+			case GPIOPins.GPIO24:
+				l.add(RaspiPin.GPIO_24);
+				break;
+			case GPIOPins.GPIO25:
+				l.add(RaspiPin.GPIO_25);
+				break;
+			case GPIOPins.GPIO26:
+				l.add( RaspiPin.GPIO_26);
+				break;
+			case GPIOPins.GPIO27:
+				l.add( RaspiPin.GPIO_27);
+				break;
+			case GPIOPins.GPIO28:
+				l.add( RaspiPin.GPIO_28);
+				break;
+			case GPIOPins.GPIO29:
+				l.add( RaspiPin.GPIO_29);
+				break;
 			}		 
 		 }
+
 		return l.toArray(new Pin[l.size()]);
 	}
 }

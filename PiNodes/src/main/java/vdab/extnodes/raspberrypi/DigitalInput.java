@@ -63,18 +63,29 @@ public class DigitalInput extends AnalysisInput {
 		return c_cdb_InputPins.getAllSet(","); 
 	}	
 	public void set_InputPins(String ports){
+		
+
 		// Multitple attributes, probably read from xml config
 		if (ports.contains(",")){
-			 c_cdb_InputPins.setAll(ports,","); 	
+			 c_cdb_InputPins.setAll(ports,","); 
+			
 		} 
 		// Clear command from option picker
 		else if (ports.equals(SpecialText.CLEAR)){
 			c_cdb_InputPins.clear();
+			return;
 		}
-		// One value to add.
 		else {
+		// One value to add.
 			c_cdb_InputPins.set(ports);
 		}
+		// if it is all, reset all the others.
+		String allLabel = GPIOPins.getEnum().getLabel(GPIOPins.ALL);
+		if (c_cdb_InputPins.isSet(allLabel)){
+			c_cdb_InputPins.clear();
+			c_cdb_InputPins.set(allLabel);			
+		}
+
 	}
 	public AnalysisDataDef def_InputPins(AnalysisDataDef theDataDef){
 		String[] portLabels = GPIOPins.getEnum().getAllLabels();
@@ -82,9 +93,13 @@ public class DigitalInput extends AnalysisInput {
 		ArrayList<String> l = new ArrayList<String>();
 		if (!c_cdb_InputPins.isEmpty())
 			l.add(SpecialText.CLEAR);
-		for (String label: portLabels){
-			if  (!c_cdb_InputPins.isSet(label))
-				l.add(label);
+		
+		String allLabel = GPIOPins.getEnum().getLabel(GPIOPins.ALL);
+		if (!c_cdb_InputPins.isSet(allLabel)){
+			for (String label: portLabels){
+				if  (!c_cdb_InputPins.isSet(label))
+					l.add(label);
+			}
 		}
 		theDataDef.setAllPickValues(l.toArray(new String[l.size()]));
 		return theDataDef;
@@ -150,7 +165,7 @@ public class DigitalInput extends AnalysisInput {
 			for (int n = 0; n < c_InputPins.length;  n++){
 				c_InputPins[n] = c_Gpio.provisionDigitalInputPin(c_Pins[n], PinPullResistance.PULL_DOWN);
 				c_InputPins[n].addListener(c_PinListener);
-				logInfo("Added Pin Listeneer PIN="+c_InputPins[n].getPin().getAddress());
+				logInfo("Added Pin Listener PIN="+c_InputPins[n].getPin().getAddress());
 			}
 
 		}
