@@ -16,6 +16,7 @@
 package vdab.extnodes.raspberrypi;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import com.lcrc.af.AnalysisData;
 import com.lcrc.af.AnalysisDataDef;
@@ -25,12 +26,19 @@ import com.lcrc.af.util.StringUtility;
 
 public class SerialSource extends AnalysisSource {
 	private String c_SerialDevice;
+	private Boolean c_ByLine = Boolean.FALSE;
 	private SerialConnection c_SerialConnection = SerialConnection.getSampleConnection();
-
+	private StringBuilder c_Buffer = new StringBuilder();
+	
 	public SerialSource(){
 		c_SerialConnection.addInput(this);
 	}
-
+	public Boolean get_ByLine(){
+		return  c_ByLine;
+	}
+	public void set_ByLine(Boolean byline){
+		 c_ByLine = byline;
+	}
 	public String get_SerialDevice(){
 		return c_SerialDevice;
 	}
@@ -70,6 +78,7 @@ public class SerialSource extends AnalysisSource {
 	public void _start() {
 		super._start();
 		c_SerialConnection.addInput(this);
+		c_Buffer = new StringBuilder();
 		try {
 			c_SerialConnection.init();
 			c_SerialConnection.open();
@@ -96,7 +105,36 @@ public class SerialSource extends AnalysisSource {
 	}
 
 	public  synchronized void publishIndividualEvent(String data){
-        publish(new AnalysisEvent(this, new AnalysisData("In",data)));    
+		
+	
+		if (!c_ByLine.booleanValue()){
+			publishEvent0(data);
+			return;
+		}
+		
+		StringTokenizer st = new StringTokenizer(data,"\n\r", true);
+		
+		while (st.hasMoreTokens()){
+			String next = st.nextToken();
+			if (next.equals("\n") || next.equals("\r")){
+				if (c_Buffer.length() > 0)
+					publishEvent0(c_Buffer.toString());
+			}
+			else {
+				c_Buffer.append(next);
+			}
+			
+		}
+	
+	}
+	private void publishEvent0(String data){
+
+		String label = "Data";
+		if (get_NewDataLabel() != null)
+			label = get_NewDataLabel();
+		
+		 publish(new AnalysisEvent(this, new AnalysisData(label,data)));    
+		 c_Buffer = new StringBuilder();
 	}
 
 

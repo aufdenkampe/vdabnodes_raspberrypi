@@ -9,6 +9,15 @@
 		<attr name="EditOrder" type="Integer">1</attr>
 		<attr name="RefreshOnChange" type="Boolean">true</attr>
 	</datadef>  
+	<datadef name="NewDataLabel">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">2</attr>
+	</datadef> 
+	<datadef name="ByLine">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">2</attr>
+		<attr name="Desc" >Wait for a line feed before publishing data.</attr>			
+	</datadef> 
 </nodedef>
 <nodedef name="SerialTarget" class="vdab.extnodes.raspberrypi.SerialTarget">
     <attr name="ConsumedEventTypes">Event,String</attr>
@@ -23,6 +32,11 @@
 		<attr name="Category">Standard</attr>
 		<attr name="EditOrder" type="Integer">2</attr>
 	</datadef>
+	<datadef name="ByLine">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">3</attr>
+		<attr name="Desc" >Writes out each part of the labeled data with a new line.</attr>			
+	</datadef> 
 </nodedef>
 <nodedef name="DigitalOutput" class="vdab.extnodes.raspberrypi.DigitalOutput">
     <attr name="ConsumedEventTypes">Boolean,Number,String,Event</attr>

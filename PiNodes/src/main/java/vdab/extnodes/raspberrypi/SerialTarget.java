@@ -26,6 +26,7 @@ import com.lcrc.af.util.StringUtility;
 public class SerialTarget extends AnalysisTarget {
 	private String c_SerialDevice;
 	private Boolean c_IncludeLabels = Boolean.FALSE;
+	private Boolean c_ByLine = Boolean.FALSE;
 	private SerialConnection c_SerialConnection = SerialConnection.getSampleConnection();
 
 	public SerialTarget(){
@@ -36,6 +37,12 @@ public class SerialTarget extends AnalysisTarget {
 	}
 	public void set_IncludeLabels(Boolean include){
 		 c_IncludeLabels = include;
+	}
+	public Boolean get_ByLine(){
+		return  c_ByLine;
+	}
+	public void set_ByLine(Boolean byline){
+		 c_ByLine = byline;
 	}
 	public String get_SerialDevice(){
 		return c_SerialDevice;
@@ -110,12 +117,12 @@ public class SerialTarget extends AnalysisTarget {
 		try {
 			AnalysisData ad = getSelectedData(ev.getAnalysisData());
 			if (ad.isSimple()){
-				c_SerialConnection.writeln(this, buildData(ad));
+				writeData(buildData(ad));
 			}
 			else {
 				AnalysisData[] ads = ad.getAllSimpleSubData();
-				for (AnalysisData ad0: ads){
-					c_SerialConnection.writeln(this, buildData(ad0));
+				for (AnalysisData ad0: ads){		
+					writeData(buildData(ad0));
 				}
 			}
 		}
@@ -123,6 +130,13 @@ public class SerialTarget extends AnalysisTarget {
 			setError("Failed writing to the Serial port e>"+e);
 			_disable();
 		}
+	}
+	private void writeData(String data) throws Exception{
+		if (c_ByLine.booleanValue())
+			c_SerialConnection.writeln(this, data);
+		else
+			c_SerialConnection.write(this, data);
+		
 	}
 	private String buildData(AnalysisData ad){
 		if (c_IncludeLabels.booleanValue()){
