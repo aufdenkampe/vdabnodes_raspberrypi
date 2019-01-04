@@ -23,7 +23,7 @@ This software makes us of the following components which include their own licen
 
 | | |
 |  --- |  :---: |
-| Pi4J  | [GNU LGPLv3 License](http://www.gnu.org/licenses/lgpl.txt) |
+| Java IO Library - Pi4J | [GNU LGPLv3 License](http://www.gnu.org/licenses/lgpl.txt) |
 
 ### Loading the the Package
 The current or standard version can be loaded directly using the VDAB Android Client following the directions
