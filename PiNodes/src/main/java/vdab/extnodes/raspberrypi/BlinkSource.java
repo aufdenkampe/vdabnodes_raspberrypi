@@ -27,11 +27,11 @@ public class BlinkSource extends AnalysisPolledSource {
 	@Override
 	public void processData() {
 		if (c_Led1 != null)
-			c_Led1.blink(200, getPollRateInMillis()/2);
+			c_Led1.blink(200, getRateInMillis()/2);
 		if (c_Led2 != null)
-			c_Led2.blink(500, getPollRateInMillis());
+			c_Led2.blink(500, getRateInMillis());
 	}
-	private long getPollRateInMillis(){
+	private long getRateInMillis(){
 		return get_PollRate().longValue() * 1000L;
 	}
 	public void _start(){
