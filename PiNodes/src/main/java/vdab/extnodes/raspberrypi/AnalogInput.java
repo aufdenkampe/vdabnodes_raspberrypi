@@ -14,6 +14,8 @@
  * limitations under the License.
 */
 package vdab.extnodes.raspberrypi;
+import java.io.IOException;
+
 import com.lcrc.af.AnalysisData;
 import com.pi4j.gpio.extension.ads.ADS1115Pin;
 import com.lcrc.af.AnalysisEvent;
@@ -26,6 +28,7 @@ import com.pi4j.io.gpio.GpioPinAnalogInput;
 import com.pi4j.io.gpio.event.GpioPinAnalogValueChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerAnalog;
 import com.pi4j.io.i2c.I2CBus;
+import com.pi4j.io.i2c.I2CFactory;
 
 public class AnalogInput extends AnalysisInput {
 	private GpioController c_Gpio;
@@ -38,6 +41,20 @@ public class AnalogInput extends AnalysisInput {
 	}
 	public void set_MonitorInterval(Integer interval){
 		c_MonitorInterval = interval;
+	}
+	public String get_AvailableBusNumber(){
+		try {
+			int[] nos = I2CFactory.getBusIds();
+			StringBuilder sb = new StringBuilder();
+			for (int no: nos){
+				sb.append(no);
+				sb.append(",");
+			}
+			return sb.toString();
+		}
+		catch (IOException e) {
+			return "e>"+e;
+		}
 	}
 	public void _start(){
 		super._start();
