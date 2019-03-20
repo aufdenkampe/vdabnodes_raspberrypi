@@ -74,6 +74,10 @@
 <nodedef name="AnalogInputGert" class="vdab.extnodes.raspberrypi.AnalogInputGert">
  	<attr name="ConsumedEventTypes">NONE</attr>
     <attr name="PublishedEventTypes">Number</attr>
+    <datadef name="OutputPins">
+	    <attr name="RefreshOnChange" type="Boolean">true</attr>
+		<attr name="Category">Required</attr>
+	</datadef>
 </nodedef>
 <nodedef name="BlinkSource" class="vdab.extnodes.raspberrypi.BlinkSource">
     <attr name="ConsumedEventTypes">NONE</attr>
@@ -82,6 +86,31 @@
 <nodedef name="AnalogInput" class="vdab.extnodes.raspberrypi.AnalogInput">
  	<attr name="ConsumedEventTypes">NONE</attr>
     <attr name="PublishedEventTypes">Number,Event,String</attr>
+    <attr name="NodeDescTemplate"> ${SerialDevice} ${PortSettings}</attr>
+    <datadef name="A2DChip">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">1</attr>
+		<attr name="Enum">A2DChipType</attr>
+		<attr name="RefreshOnChange" type="Boolean">true</attr>
+		<attr name="Desc" >Analog chip type. Currently only the ADS1115 is supported.</attr>	
+	</datadef>
+	<datadef name="VoltageRange">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">2</attr>
+		<attr name="Enum">A2DVoltageRange</attr>
+		<attr name="Desc" >Voltage Range. NOT YET IMPLEMENTED. HARDCODED TO +/-4.096v</attr>	
+	</datadef>
+	<datadef name="ChangeThreshold">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">3</attr>
+		<attr name="Desc" >Change required in counts before a new value is sent.</attr>	
+	</datadef>
+	<datadef name="MonitorInterval">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">4</attr>
+		<attr name="Desc" >Time between A2D reads in milliseconds.</attr>	
+		
+	</datadef>
 </nodedef>
 <nodedef name="PiCameraSource" class="vdab.extnodes.raspberrypi.PiCameraSource">
  	<attr name="ConsumedEventTypes">NONE</attr>
