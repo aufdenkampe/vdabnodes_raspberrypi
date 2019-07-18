@@ -3,11 +3,20 @@
 <nodedef name="TemperatureService" class="vdab.extnodes.raspberrypi.TemperatureService">
     <attr name="ConsumedEventTypes">Trigger</attr>
     <attr name="PublishedEventTypes">Event</attr>
-    <attr name="NodeDescTemplate">T from ${Device}</attr>
+    <attr name="NodeDescTemplate">from ${Device}</attr>
     <datadef name="Device">
 		<attr name="Category">Required</attr>
 		<attr name="EditOrder" type="Integer">1</attr>
 	</datadef>  
+	<datadef name="TemperatureUnit">
+		<attr name="Category">Standard</attr>
+		<attr name="Enum">TemperatureUnit</attr>
+		<attr name="EditOrder" type="Integer">2</attr>
+	</datadef> 
+	<datadef name="NewDataLabel">
+		<attr name="Category">Standard</attr>
+		<attr name="EditOrder" type="Integer">3</attr>
+	</datadef> 
 </nodedef>
 <nodedef name="SerialSource" class="vdab.extnodes.raspberrypi.SerialSource">
     <attr name="ConsumedEventTypes">NONE</attr>
