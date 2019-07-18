@@ -10,12 +10,17 @@
 	</datadef>  
 	<datadef name="TemperatureUnit">
 		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="Enum">TemperatureUnit</attr>
 		<attr name="EditOrder" type="Integer">2</attr>
 	</datadef> 
 	<datadef name="NewDataLabel">
 		<attr name="Category">Standard</attr>
+		<attr name="EditWhileRunning" type="Boolean">true</attr>
 		<attr name="EditOrder" type="Integer">3</attr>
+	</datadef> 
+	<datadef name="OutputType">
+		<attr name="Category">Hidden</attr>
 	</datadef> 
 </nodedef>
 <nodedef name="SerialSource" class="vdab.extnodes.raspberrypi.SerialSource">
