@@ -6,7 +6,7 @@ targetCompatibility = 1.7
 
 
 dependencies {
-    compile files('build/vdab/VDABCore.jar' ,'libs/pi4j-core.jar' , 'libs/pi4j-gpio-extension.jar' )
+    compile files('build/vdab/VDABCore.jar' ,'libs/pi4j-core.jar' , 'libs/pi4j-gpio-extension.jar', 'libs/pi4j-device.jar' )
  }
  
  //Get dependencies from Maven central repository

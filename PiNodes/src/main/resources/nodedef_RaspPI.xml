@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <nodedefs>
+<nodedef name="TemperatureService" class="vdab.extnodes.raspberrypi.TemperatureService">
+    <attr name="ConsumedEventTypes">Trigger</attr>
+    <attr name="PublishedEventTypes">Event</attr>
+    <attr name="NodeDescTemplate">T from ${Device}</attr>
+    <datadef name="Device">
+		<attr name="Category">Required</attr>
+		<attr name="EditOrder" type="Integer">1</attr>
+	</datadef>  
+</nodedef>
 <nodedef name="SerialSource" class="vdab.extnodes.raspberrypi.SerialSource">
     <attr name="ConsumedEventTypes">NONE</attr>
     <attr name="PublishedEventTypes">Event,String</attr>
